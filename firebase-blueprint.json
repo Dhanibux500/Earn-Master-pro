@@ -1,0 +1,207 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and balance information",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "referral_code": { "type": "string" },
+        "referred_by": { "type": "string" },
+        "balance": { "type": "number" },
+        "total_earned": { "type": "number" },
+        "total_withdrawn": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "blocked"] },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "balance", "role", "status"]
+    },
+    "Ad": {
+      "title": "Ad",
+      "description": "Advertisement details",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["image", "video"] },
+        "media_url": { "type": "string" },
+        "reward_amount": { "type": "number" },
+        "timer_duration": { "type": "number" },
+        "daily_limit": { "type": "number" },
+        "expiry_date": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "total_views": { "type": "number" },
+        "total_paid": { "type": "number" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "type", "media_url", "reward_amount", "timer_duration", "status"]
+    },
+    "UserAd": {
+      "title": "UserAd",
+      "description": "Log of ads watched by users",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "ad_id": { "type": "string" },
+        "earned_amount": { "type": "number" },
+        "viewed_at": { "type": "string", "format": "date-time" },
+        "ip_address": { "type": "string" }
+      },
+      "required": ["user_id", "ad_id", "earned_amount", "viewed_at"]
+    },
+    "SocialTask": {
+      "title": "SocialTask",
+      "description": "Social media task details",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "platform": { "type": "string", "enum": ["youtube", "facebook", "instagram", "tiktok", "twitter", "telegram"] },
+        "task_url": { "type": "string" },
+        "instructions": { "type": "string" },
+        "reward_amount": { "type": "number" },
+        "daily_limit": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "platform", "task_url", "reward_amount", "status"]
+    },
+    "UserTask": {
+      "title": "UserTask",
+      "description": "User submissions for social tasks",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "task_id": { "type": "string" },
+        "screenshot": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "admin_remark": { "type": "string" },
+        "submitted_at": { "type": "string", "format": "date-time" },
+        "approved_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "task_id", "status", "submitted_at"]
+    },
+    "RedeemCode": {
+      "title": "RedeemCode",
+      "description": "Promotional redeem codes",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "reward_value": { "type": "number" },
+        "total_uses": { "type": "number" },
+        "used_count": { "type": "number" },
+        "expiry_date": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "reward_value", "total_uses", "used_count", "status"]
+    },
+    "RedeemedLog": {
+      "title": "RedeemedLog",
+      "description": "Log of redeemed codes by users",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "code_id": { "type": "string" },
+        "reward_earned": { "type": "number" },
+        "redeemed_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "code_id", "reward_earned", "redeemed_at"]
+    },
+    "Withdrawal": {
+      "title": "Withdrawal",
+      "description": "Withdrawal requests",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "amount": { "type": "number" },
+        "payment_method": { "type": "string", "enum": ["easypaisa", "jazzcash", "binance"] },
+        "account_details": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed", "rejected"] },
+        "admin_remark": { "type": "string" },
+        "requested_at": { "type": "string", "format": "date-time" },
+        "processed_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "amount", "payment_method", "account_details", "status", "requested_at"]
+    },
+    "Referral": {
+      "title": "Referral",
+      "description": "Referral relationship and earnings",
+      "type": "object",
+      "properties": {
+        "referrer_id": { "type": "string" },
+        "referred_user_id": { "type": "string" },
+        "commission_earned": { "type": "number" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["referrer_id", "referred_user_id", "commission_earned", "created_at"]
+    },
+    "DailyBonus": {
+      "title": "DailyBonus",
+      "description": "Daily bonus claim log",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "amount": { "type": "number" },
+        "streak_count": { "type": "number" },
+        "claimed_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "amount", "streak_count", "claimed_at"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System notifications for users",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["info", "success", "warning"] },
+        "is_read": { "type": "boolean" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "title", "message", "type", "is_read", "created_at"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "User activity logs",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" },
+        "ip_address": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "action", "created_at"]
+    },
+    "Setting": {
+      "title": "Setting",
+      "description": "Global system settings",
+      "type": "object",
+      "properties": {
+        "setting_key": { "type": "string" },
+        "setting_value": { "type": "string" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["setting_key", "setting_value", "updated_at"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/ads/{adId}": { "schema": "Ad", "description": "Advertisements" },
+    "/user_ads/{logId}": { "schema": "UserAd", "description": "Ad watch logs" },
+    "/social_tasks/{taskId}": { "schema": "SocialTask", "description": "Social tasks" },
+    "/user_tasks/{submissionId}": { "schema": "UserTask", "description": "Task submissions" },
+    "/redeem_codes/{codeId}": { "schema": "RedeemCode", "description": "Redeem codes" },
+    "/redeemed_log/{logId}": { "schema": "RedeemedLog", "description": "Redeem logs" },
+    "/withdrawals/{withdrawalId}": { "schema": "Withdrawal", "description": "Withdrawal requests" },
+    "/referrals/{referralId}": { "schema": "Referral", "description": "Referral logs" },
+    "/daily_bonus/{bonusId}": { "schema": "DailyBonus", "description": "Daily bonus logs" },
+    "/notifications/{notificationId}": { "schema": "Notification", "description": "User notifications" },
+    "/activity_logs/{logId}": { "schema": "ActivityLog", "description": "Activity logs" },
+    "/settings/{settingId}": { "schema": "Setting", "description": "Global settings" }
+  }
+}
